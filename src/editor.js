@@ -102,6 +102,11 @@ function createHTML(options = {}) {
             bold: { state: function() { return queryCommandState('bold'); }, result: function() { return exec('bold'); }},
             italic: { state: function() { return queryCommandState('italic'); }, result: function() { return exec('italic'); }},
             underline: { state: function() { return queryCommandState('underline'); }, result: function() { return exec('underline'); }},
+            justifyLeft: { state: function() { return queryCommandState('justifyLeft'); }, result: function() { return exec('justifyLeft'); }},
+            justifyCenter: { state: function() { return queryCommandState('justifyCenter'); }, result: function() { return exec('justifyCenter'); }},
+            justifyRight: { state: function() { return queryCommandState('justifyRight'); }, result: function() { return exec('justifyRight'); }},
+            justifyFull: { state: function() { return queryCommandState('justifyFull'); }, result: function() { return exec('justifyFull'); }},
+            foreColor: { state: function() { return queryCommandState('foreColor'); }, result: function(val) { return exec('foreColor', val); }},
             strikeThrough: { state: function() { return queryCommandState('strikeThrough'); }, result: function() { return exec('strikeThrough'); }},
             heading1: { result: function() { return exec(formatBlock, '<h1>'); }},
             heading2: { result: function() { return exec(formatBlock, '<h2>'); }},
@@ -115,6 +120,13 @@ function createHTML(options = {}) {
             unorderedList: { state: function() { return queryCommandState('insertUnorderedList'); },result: function() { return exec('insertUnorderedList'); }},
             code: { result: function() { return exec(formatBlock, '<pre>'); }},
             line: { result: function() { return exec('insertHorizontalRule'); }},
+            fontSize: {
+                result: function(val) {
+                    document.execCommand('formatblock', false, 'p')
+                    var listId = window.getSelection().focusNode.parentNode;
+                    listId.style.fontSize = val;
+                }
+            },
             link: {
                 result: function(data) {
                     data = data || {};
@@ -299,4 +311,4 @@ function createHTML(options = {}) {
 }
 
 const HTML = createHTML();
-export {HTML, createHTML};
+export { HTML, createHTML };
